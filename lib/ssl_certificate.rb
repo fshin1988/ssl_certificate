@@ -21,7 +21,7 @@ module SslCertificate
       end
     end
 
-    def check_private_key_str(private_key_str)
+    def check_private_key_by_str(private_key_str)
       private_key = OpenSSL::PKey::RSA.new(private_key_str)
       check_private_key(private_key)
     end
