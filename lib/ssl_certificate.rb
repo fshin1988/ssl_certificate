@@ -12,10 +12,10 @@ module SslCertificate
       end
     end
 
-    def alternative_name
+    def alternative_names
       alt_name = extensions.find { |ex| ex.oid == 'subjectAltName' }
       if alt_name
-        alt_name.value.split(',').map { |dns| dns.strip.gsub(/^DNS:/, '') }.join("\n")
+        alt_name.value.split(',').map { |dns| dns.strip.gsub(/^DNS:/, '') }
       else
         nil
       end
