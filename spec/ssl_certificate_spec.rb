@@ -15,14 +15,20 @@ RSpec.describe SslCertificate do
     expect(cert.alternative_names).to match_array(["example.com", "hoge.example.com"])
   end
 
-  it "returns ture with valid private_key_str" do
-    key_str = File.read("spec/test_data/www.example.com.key")
-    expect(cert.check_private_key_by_str(key_str)).to be_truthy
-  end
+  describe "checks whether a private_key string corresponds to the certificate" do
+    context "with a valid private_key string" do
+      it "returns true" do
+        key_str = File.read("spec/test_data/www.example.com.key")
+        expect(cert.check_private_key_by_str(key_str)).to be_truthy
+      end
+    end
 
-  it "returns false with invalid private_key_str" do
-    key_str = File.read("spec/test_data/example.org.key")
-    expect(cert.check_private_key_by_str(key_str)).to be_falsey
+    context "with a invalid private_key string" do
+      it "returns false" do
+        key_str = File.read("spec/test_data/example.org.key")
+        expect(cert.check_private_key_by_str(key_str)).to be_falsey
+      end
+    end
   end
 
   describe "checks whether a fqdn corresponds to the certificate" do
