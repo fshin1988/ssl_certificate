@@ -25,5 +25,19 @@ module SslCertificate
       private_key = OpenSSL::PKey::RSA.new(private_key_str)
       check_private_key(private_key)
     end
+
+    def check_fqdn(fqdn)
+      matched = match_between(fqdn, common_name)
+      if matched.nil? && alternative_names
+        matched = alternative_names.find { |name| match_between(fqdn, name) }
+      end
+      matched ? true : false
+    end
+
+    private
+
+    def match_between(fqdn, str)
+      fqdn =~ /\A#{str.gsub('.', '\.').gsub('*', '.*')}\z/
+    end
   end
 end

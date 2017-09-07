@@ -24,4 +24,24 @@ RSpec.describe SslCertificate do
     key_str = File.read("spec/test_data/example.org.key")
     expect(cert.check_private_key_by_str(key_str)).to be_falsey
   end
+
+  describe "checks whether a fqdn corresponds to the certificate" do
+    context "with a fqdn matching common_name" do
+      it "returns true" do
+        expect(cert.check_fqdn("www.example.com")).to be_truthy
+      end
+    end
+
+    context "with a fqdn matching alternative_names" do
+      it "returns true" do
+        expect(cert.check_fqdn("hoge.example.com")).to be_truthy
+      end
+    end
+
+    context "with a fqdn not matching common_name and alternative_names" do
+      it "returns false" do
+        expect(cert.check_fqdn("example.org")).to be_falsey
+      end
+    end
+  end
 end
