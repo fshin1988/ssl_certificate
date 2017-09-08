@@ -1,8 +1,6 @@
 # SslCertificate
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ssl_certificate`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+ssl_certificate is wrapper of OpenSSL::X509::Certificate.
+it makes you to handle ssl certificate easier.
 
 ## Installation
 
@@ -21,8 +19,29 @@ Or install it yourself as:
     $ gem install ssl_certificate
 
 ## Usage
+```ruby
+require 'ssl_certificate'
 
-TODO: Write usage instructions here
+# create object from certificate of pem or der format
+cert_pem = File.read("spec/test_data/www.example.com.crt")
+cert = SslCertificate::Certificate.new(cert_pem)
+
+cert.common_name
+# => "www.example.com"
+
+cert.alternative_names
+# => ["example.com", "hoge.example.com"]
+
+key_pem = File.read("spec/test_data/www.example.com.key")
+cert.check_private_key_str(key_pem)
+# => true
+
+# check whether a fqdn corresponds to the certificate
+cert.check_fqdn("www.example.com")
+# => true
+cert.check_fqdn("hoge.example.com")
+# => true
+```
 
 ## Development
 
@@ -32,7 +51,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/ssl_certificate.
+Bug reports and pull requests are welcome on GitHub at https://github.com/fshin1988/ssl_certificate.
 
 ## License
 
