@@ -19,14 +19,14 @@ RSpec.describe SslCertificate do
     context "with a valid private_key string" do
       it "returns true" do
         key_str = File.read("spec/test_data/www.example.com.key")
-        expect(cert.check_private_key_by_str(key_str)).to be_truthy
+        expect(cert.check_private_key_str(key_str)).to be_truthy
       end
     end
 
     context "with a invalid private_key string" do
       it "returns false" do
         key_str = File.read("spec/test_data/example.org.key")
-        expect(cert.check_private_key_by_str(key_str)).to be_falsey
+        expect(cert.check_private_key_str(key_str)).to be_falsey
       end
     end
   end
