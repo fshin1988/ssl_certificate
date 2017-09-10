@@ -1,7 +1,7 @@
 # SslCertificate
 ssl_certificate is wrapper of OpenSSL::X509::Certificate.
 
-It makes you to handle ssl certificate easier.
+It has some useful methods to handle ssl certificate.
 
 ## Installation
 
